@@ -9,8 +9,11 @@ fun main() {
     ChatService.addUserToChat(chatId, user3.id)
     //ChatService.removeUserFromChat(chatId, user1.id)
 
-    println(ChatService.getChatName(chatId))
+    //println(ChatService.getChatName(chatId))
 
-    val chats = ChatService.getUserChats(user1.id)
-    println(chats)
+    //val chats = ChatService.getUserChats(user1.id)
+    //println(chats)
+
+    println(ChatService.getById(chatId).membersIds)
+
 }

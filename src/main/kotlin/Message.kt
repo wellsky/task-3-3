@@ -1,8 +1,9 @@
 data class Message (
-    val id: Int, // идентификатор сообщеия
-    val chatId: Int, // идентификатор чата
-    val authorId: Int, // идентификатор автора
+    val chatId: Long, // идентификатор чата
+    val authorId: Long, // идентификатор автора
     val date: Int, // дата создания сообщения в формате Unixtime.
     var text: String, // текст сообщения
-    var deleted: Boolean = false // Флаг удаленного сообщения
-)
+
+    override var id: Long? = null,
+    override var deleted: Boolean = false
+): Content()

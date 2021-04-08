@@ -4,14 +4,12 @@ object ChatService: CrudService<Chat> {
     override var items: MutableList<Chat> = mutableListOf<Chat>()
     override var nextItemId: Long = 0
 
+    override fun edit(chat: Chat) {}
+
     override fun add(chat: Chat): Long {
         val chatId = super.add(chat)
         addUserToChat(chatId, chat.ownerId)
         return chatId
-    }
-
-    override fun edit(chat: Chat) {
-
     }
 
     fun getUserChats(userId: Int, onlyUnread: Boolean = false): MutableList<Chat> {
@@ -27,7 +25,11 @@ object ChatService: CrudService<Chat> {
 
     fun addUserToChat(chatId: Long, userId: Int) {
         val chat = getById(chatId)
-        chat.membersIds.add(userId)
+        if (chat.membersIds.size < MAXIMUM_CHAT_MEMBERS) {
+            chat.membersIds.add(userId)
+        } else {
+            // Ошибка, в чате максимальное число участников
+        }
     }
 
     fun removeUserFromChat(chatId: Long, userId: Int) {
@@ -46,7 +48,13 @@ object ChatService: CrudService<Chat> {
         }
     }
 
-    fun getChatMessages(userId: Int, chatId: Int, firstMessageid: Int, count: Int) {
+    fun getChatMessages(user:User, chatId: Long, lastReadId: Long, count: Int) {
 
+        user.chatLastReadMessage.set(chatId, 1) // Устанавливаем все прочитанным
     }
+
+    fun registerMessage(message: Message) {
+        val messageId = MessageService.add(message)
+    }
+
 }
