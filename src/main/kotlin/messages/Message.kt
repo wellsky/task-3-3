@@ -1,3 +1,7 @@
+package messages
+
+import content.Content
+
 data class Message (
     val chatId: Long, // идентификатор чата
     val authorId: Long, // идентификатор автора

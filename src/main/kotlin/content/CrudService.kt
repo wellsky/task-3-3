@@ -1,3 +1,5 @@
+package content
+
 interface CrudService<E: Content> {
     var items: MutableList<E>
     var nextItemId: Long
@@ -32,7 +34,7 @@ interface CrudService<E: Content> {
                 }
             }
         }
-        throw ContentNotFoundException("Content not found")
+        throw ContentNotFoundException("content.Content not found")
     }
 
     fun restore(id: Long) {
