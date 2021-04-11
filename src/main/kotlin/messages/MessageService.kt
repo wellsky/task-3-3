@@ -17,20 +17,16 @@ object MessageService: CrudService<Message> {
     }
 
     fun getChatMessages(chatId: Long, startAfterId: Long? = null, count: Int? = null): MutableList<Message> {
-        var list: MutableList<Message> = mutableListOf<Message>()
-
-        items.forEach {
-            if ((it.chatId == chatId) && (!it.deleted)) {
-                list.add(it)
-            }
-        }
+        var list: MutableList<Message> = items.filter {
+            (it.chatId == chatId) && (!it.deleted)
+        }.toMutableList()
 
         var fromIndex = 0
         var toIndex = list.size
 
         if (startAfterId != null) {
             val startAfterMessage = this.getById(startAfterId) // Выводить все после этого сообщения
-            fromIndex = items.indexOf(startAfterMessage) - 1
+            fromIndex = list.indexOf(startAfterMessage) + 1
         }
 
         // Если указано количество запрашиваемых сообзений, то меняем toIndex

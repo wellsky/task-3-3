@@ -21,13 +21,9 @@ object ChatService: CrudService<Chat> {
     }
 
     fun getUserChats(userId: Long, onlyUnread: Boolean = false): MutableList<Chat> {
-        var list: MutableList<Chat> = mutableListOf<Chat>()
-
-        items.forEach {
-            if ((it.membersIds.contains(userId)) && (!it.deleted)) {
-                list.add(it)
-            }
-        }
+        var list: MutableList<Chat> = items.filter {
+            (it.membersIds.contains(userId)) && (!it.deleted)
+        }.toMutableList()
         return list
     }
 
